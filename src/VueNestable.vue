@@ -126,10 +126,10 @@ export default {
       required: false,
       default: 'children'
     },
-    collapsed: {
-      type: Boolean,
+    collapsedProp: {
+      type: String,
       required: false,
-      default: false
+      default: 'collapsed'
     }
   },
 
@@ -152,7 +152,6 @@ export default {
       el: null,
       elCopyStyles: null,
       isDirty: false,
-      collapsedGroups: [],
       listId: Math.random().toString(36).slice(2)
     }
   },
@@ -166,7 +165,8 @@ export default {
         dragItem: this.dragItem,
         keyProp: this.keyProp,
         classProp: this.classProp,
-        childrenProp: this.childrenProp
+        childrenProp: this.childrenProp,
+        collapsedProp: this.collapsedProp
       }
     },
     listStyles () {
@@ -361,7 +361,7 @@ export default {
         const prevSibling = this.getItemByPath(pathFrom.slice(0, -1).concat(itemIndex - 1))
 
         // previous sibling is not collapsed
-        if (prevSibling[this.childrenProp] && (!prevSibling[this.childrenProp].length || !this.isCollapsed(prevSibling))) {
+        if (prevSibling[this.childrenProp] && !prevSibling[this.childrenProp].length) {
           const pathTo = pathFrom
             .slice(0, -1)
             .concat(itemIndex - 1)
@@ -444,21 +444,22 @@ export default {
       // if collapsed by default
       // and move last (by count) child
       // remove parent node from list of open nodes
-      let collapseProps = {}
-      if (this.collapsed && pathFrom.length > 1) {
-        const parent = this.getItemByPath(pathFrom.slice(0, -1))
+      // let collapseProps = {}
+      // if (this.collapsed && pathFrom.length > 1) {
+      //   const parent = this.getItemByPath(pathFrom.slice(0, -1))
+      //
+      //   if (parent[this.childrenProp].length === 1) {
+      //     collapseProps = this.onToggleCollapse(parent, true)
+      //   }
+      // }
 
-        if (parent[this.childrenProp].length === 1) {
-          collapseProps = this.onToggleCollapse(parent, true)
-        }
-      }
-
-      this.moveItem({ dragItem, pathFrom, pathTo }, collapseProps)
+      this.moveItem({ dragItem, pathFrom, pathTo })
+      // this.moveItem({ dragItem, pathFrom, pathTo }, collapseProps)
     },
 
-    isCollapsed (item) {
-      return !!((this.collapsedGroups.indexOf(item[this.keyProp]) > -1) ^ this.collapsed)
-    },
+    // isCollapsed (item) {
+    //   return !!((this.collapsedGroups.indexOf(item[this.keyProp]) > -1) ^ this.collapsed)
+    // },
 
     dragApply () {
       this.$emit('change', this.dragItem)

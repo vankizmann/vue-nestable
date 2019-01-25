@@ -1,5 +1,8 @@
 <template>
-  <li :class="itemClasses">
+  <li
+    v-if="isParentOpen"
+    :class="itemClasses"
+  >
     <div
       class="nestable-item-content"
       @mouseenter="onMouseEnter"
@@ -82,6 +85,10 @@ export default {
 
     hasChildren () {
       return this.item[this.options.childrenProp] && this.item[this.options.childrenProp].length > 0
+    },
+
+    isParentOpen () {
+      return this.$parent.item ? this.$parent.item[this.options.collapsedProp] === false || this.isDragging === true : true
     },
 
     hasHandle () {

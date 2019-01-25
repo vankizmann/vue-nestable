@@ -96,7 +96,7 @@ export default {
         if (nextPath[npLastIndex] > prevPath[npLastIndex]) {
           const target = this.getItemByPath(nextPath)
 
-          if (target[this.childrenProp] && target[this.childrenProp].length && !this.isCollapsed(target)) {
+          if (target[this.childrenProp] && target[this.childrenProp].length) {
             return nextPath
               .slice(0, -1)
               .concat(nextPath[npLastIndex] - 1)

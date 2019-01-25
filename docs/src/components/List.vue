@@ -2,6 +2,12 @@
   <ComponentExample link="List">
     <VueNestable v-model="nestableItems">
       <span slot-scope="{ item, index }">
+        <a
+          href="javascript:void(0)"
+          @click="item.collapsed = !item.collapsed"
+        >
+          [+]
+        </a>
         <small>[{{ index }}]</small> {{ item.text }}
       </span>
     </VueNestable>
@@ -21,17 +27,20 @@ export default {
       nestableItems: [
         {
           id: 0,
-          text: 'Andy'
+          text: 'Andy',
+          collapsed: true
         }, {
           id: 1,
           text: 'Harry',
+          collapsed: false,
           children: [{
             id: 2,
             text: 'David'
           }]
         }, {
           id: 3,
-          text: 'Lisa'
+          text: 'Lisa',
+          collapsed: true
         }
       ]
     }

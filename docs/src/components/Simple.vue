@@ -5,6 +5,12 @@
         slot-scope="{ item }"
         :item="item"
       >
+        <a
+          href="javascript:void(0)"
+          @click="item.collapsed = !item.collapsed"
+        >
+          [+]
+        </a>
         <i class="fas fa-user" />
         {{ item.text }}
       </VueNestableHandle>
@@ -25,17 +31,20 @@ export default {
       nestableItems: [
         {
           id: 0,
-          text: 'Andy'
+          text: 'Andy',
+          collapsed: true
         }, {
           id: 1,
           text: 'Harry',
+          collapsed: true,
           children: [{
             id: 2,
             text: 'David'
           }]
         }, {
           id: 3,
-          text: 'Lisa'
+          text: 'Lisa',
+          collapsed: true
         }
       ]
     }
